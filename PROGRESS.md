@@ -97,7 +97,13 @@ so I never scatter.
       Learned dict literal syntax `{"key": value}` vs keyword args, and `**` unpacking. This is the
       real FastAPI endpoint pattern: raw dict → validate → clean object or clear error.
 - [x] Test one good dict + one bad dict, print what happens each time. **PYDANTIC SUB-TOPIC COMPLETE.**
-- [ ] Decorators → write custom decorators from scratch
+- [~] Decorators → write 5 custom decorators from scratch. **1 of 5 done:** `log_call` in
+      `layer-1-python/decorator.py` — generic, uses `*args/**kwargs`, `@functools.wraps`, prints before
+      and after, returns the value unchanged. Passes all 5 tests (int return, kwargs, `__name__`,
+      3-arg fn, 0-arg fn). Learned: decorator = function that wraps a function; `*args/**kwargs` is what
+      makes it universal; print vs return are different jobs; a decorator must be transparent to the
+      caller; **regressions** — re-run a fixed test set after every change.
+      Remaining 4 ideas: `timer`, `retry`, `cache`, `validate_args`.
 - [ ] Iterators & generators → build a custom pagination generator
 - [ ] Context managers → both `__enter__/__exit__` and `contextlib`
 - [ ] GIL → understand + explain in simple English
@@ -124,18 +130,16 @@ Until the foundation ships: Kafka / RabbitMQ, microservices, sockets / real-time
 Note: LangChain/LangGraph ARE on the plan — but as **Layer 6**, the LAST layer, not now.
 
 ## 7. CURRENT STATE (updated each session)
-- **Date of last update:** 2026-07-21
-- **Current layer:** Layer 1 (Python fundamentals) — Pydantic sub-topic.
-- **Repo state:** Local git initialized at `/home/ttpl-lnv-0137/learning program/`, remote set to
-  `learning-myself`, `.gitignore` added. **First commit exists LOCALLY: `3a0a874` "layer 1: patient
-  model with real types, runs clean". NOT yet pushed to GitHub.**
-- **�blocker🚨 — GitHub push blocked:** `git push` returns `403 — You must verify your email address`,
-  even though the primary email (aniketpathak34@gmail.com) IS verified and the token belongs to the
-  correct account (login `aniketpathak34`, id 67203037). **Hypothesis: the GitHub account is
-  flagged/restricted by GitHub, likely triggered by a Personal Access Token I accidentally pasted in
-  chat (secret scanning auto-flag).**
+- **Date of last update:** 2026-07-21 (Session 2)
+- **Current layer:** Layer 1 (Python fundamentals). **Pydantic sub-topic COMPLETE.** Next up: Decorators.
+- **Repo state:** ✅ LIVE ON GITHUB. Two commits pushed: `3a0a874` (patient model) and `feb900f`
+  (load_record). Files on remote: `.gitignore`, `PROGRESS.md`, `layer-1-python/models.py`.
+- **Push blocker: RESOLVED.** The earlier `403 verify email` push block was cleared (Aniket resolved the
+  account issue and pushed successfully). Repo confirmed live by re-cloning.
 - **Security lesson logged:** NEVER paste secrets (tokens, passwords, `.env`) in chat, code, or commits.
-  The leaked `ghp_...` classic token must be revoked at https://github.com/settings/tokens.
+  The leaked `ghp_...` classic token must be revoked at https://github.com/settings/tokens (do this if
+  not already done).
+- **Next task:** Decorators — write first custom decorator `log_call` (see Daily Log 2026-07-21 Session 2).
 
 ## 8. SESSION-START RITUAL (Claude runs this every session, before anything else)
 1. Read this whole file.
@@ -146,6 +150,20 @@ Note: LangChain/LangGraph ARE on the plan — but as **Layer 6**, the LAST layer
 6. Give me exactly ONE task.
 
 ## 9. DAILY LOG (append-only — newest at top)
+
+### 2026-07-21 (Session 2)
+- **Built & shipped:** Finished the Pydantic sub-topic. `models.py` now has: 6-digit `code` constraint
+  via `Field(pattern=r"^\d{6}$")`, and a `load_record(data: dict) -> Patient` function that validates a
+  raw dict (the real FastAPI endpoint pattern). Tested good + bad dicts, saw rejection.
+- **Learned:** Pydantic auto-validates at construction (no manual method); dict literal `{"k": v}` vs
+  keyword args; `**data` unpacking; `len(s)` not `s.length()`; `raise ValueError(...)` not `raise "str"`.
+- **Shipped to GitHub:** ✅ commits `3a0a874` + `feb900f` are LIVE. Repo no longer empty. Push blocker
+  resolved. **This is the pattern breaking — first-ever public, working, tested commits.**
+- **Behavior note:** Avoided the GitHub check ~5 times while happily coding — classic "do the comfortable
+  part, dodge the boring part" reflex. Was called out directly and then pushed through it. Watch for this.
+- **NEXT TASK — Decorators (Layer 1, next sub-topic):** Write a first custom decorator `log_call` that
+  prints a function's name + arguments before it runs and its result after, applied to a simple `add(a,b)`.
+  Goal for the topic: write 5 custom decorators total. Docs: functools.wraps.
 
 ### 2026-07-21 (Session 1)
 - **Built:** `layer-1-python/models.py` — a Pydantic `Patient` model with `first_name`, `last_name`,

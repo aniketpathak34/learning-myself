@@ -19,4 +19,5 @@ bad = {"first_name":"anku", "last_name":"pathu", "date_of_birth":"2000-02-12", "
 try:
     bad = load_record(bad)
 except Exception as e:
-    print("Rejected", e)
+    print("Rejected", e)  
+
