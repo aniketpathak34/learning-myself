@@ -1,3 +1,5 @@
+""""Decorator is function that takes function as argument returns the function, decorator is utilized when we dont want to change the existing function but add some extra things to it like greetings or authorization check authrntication cehck this kind of things"""
+
 from functools import wraps
 
 def log_call(func):
