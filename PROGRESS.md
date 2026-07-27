@@ -97,13 +97,14 @@ so I never scatter.
       Learned dict literal syntax `{"key": value}` vs keyword args, and `**` unpacking. This is the
       real FastAPI endpoint pattern: raw dict → validate → clean object or clear error.
 - [x] Test one good dict + one bad dict, print what happens each time. **PYDANTIC SUB-TOPIC COMPLETE.**
-- [~] Decorators → write 5 custom decorators from scratch. **1 of 5 done:** `log_call` in
-      `layer-1-python/decorator.py` — generic, uses `*args/**kwargs`, `@functools.wraps`, prints before
-      and after, returns the value unchanged. Passes all 5 tests (int return, kwargs, `__name__`,
-      3-arg fn, 0-arg fn). Learned: decorator = function that wraps a function; `*args/**kwargs` is what
-      makes it universal; print vs return are different jobs; a decorator must be transparent to the
-      caller; **regressions** — re-run a fixed test set after every change.
-      Remaining 4 ideas: `timer`, `retry`, `cache`, `validate_args`.
+- [~] Decorators → write 5 custom decorators from scratch. **2 of 5 done.**
+      1. `log_call` (`decorator.py`) — prints name/args before, result after, returns value unchanged.
+      2. `timer` (`profiling_decorator.py`) — measures duration with `time.perf_counter()`
+         (`start`/`end`/`elapsed = end - start`), prints `"{name} took {elapsed:.4f} seconds"`.
+      Learned: decorator wraps a function; `*args/**kwargs` makes it universal; print vs return are
+      different jobs; transparent to caller; **regressions** (re-run tests after every change);
+      measuring = subtracting two timestamps; module filenames use underscores not hyphens.
+      Remaining 3 ideas: `retry`, `cache`, `validate_args`.
 - [ ] Iterators & generators → build a custom pagination generator
 - [ ] Context managers → both `__enter__/__exit__` and `contextlib`
 - [ ] GIL → understand + explain in simple English
