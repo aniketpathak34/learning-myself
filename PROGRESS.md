@@ -104,7 +104,12 @@ so I never scatter.
       Learned: decorator wraps a function; `*args/**kwargs` makes it universal; print vs return are
       different jobs; transparent to caller; **regressions** (re-run tests after every change);
       measuring = subtracting two timestamps; module filenames use underscores not hyphens.
-      Remaining 3 ideas: `retry`, `cache`, `validate_args`.
+      3. `retry` (`retry.py`) — loops N times, `try: return func(...)` / `except: print + retry`,
+         prints "all attempts failed" if every try raises. Recovers a flaky function, gives up cleanly
+         on an always-failing one. Learned: failures arrive as raised exceptions (not return values),
+         so you catch them with try/except; return-on-success stops the loop; a variable only assigned
+         inside a `try` is unset if the try raises (that was the UnboundLocalError). **3 of 5 done.**
+      Remaining 2 ideas: `cache` (remember past results), `validate_args` (check argument types).
 - [ ] Iterators & generators → build a custom pagination generator
 - [ ] Context managers → both `__enter__/__exit__` and `contextlib`
 - [ ] GIL → understand + explain in simple English
