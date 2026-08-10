@@ -109,8 +109,14 @@ so I never scatter.
          on an always-failing one. Learned: failures arrive as raised exceptions (not return values),
          so you catch them with try/except; return-on-success stops the loop; a variable only assigned
          inside a `try` is unset if the try raises (that was the UnboundLocalError). **3 of 5 done.**
-      Remaining 2 ideas: `cache` (remember past results), `validate_args` (check argument types).
-- [ ] Iterators & generators → build a custom pagination generator
+      4. `cache` (`cache_decorator.py`) — dict stores results keyed by input; `if key in dict` (not
+         truthiness, so `0` caches correctly); the dict is created INSIDE `cache(func)` so each
+         decorated function gets its OWN cache (closure/per-function state) — no cross-function bleed.
+         Learned: WHERE you create a variable decides who shares it (outside = shared, inside = private).
+      **DECORATORS DONE (4 of 5 — concept fully understood incl. closures). `validate_args` = optional
+      bonus, deferred. Moving on.**
+- [~] Iterators & generators → build a custom pagination generator. **IN PROGRESS** (started after
+      decorators). Task: a generator that yields a big list in pages of N items using `yield`.
 - [ ] Context managers → both `__enter__/__exit__` and `contextlib`
 - [ ] GIL → understand + explain in simple English
 - [ ] Multithreading vs multiprocessing → two scripts, same I/O problem, compare
