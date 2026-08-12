@@ -115,9 +115,18 @@ so I never scatter.
          Learned: WHERE you create a variable decides who shares it (outside = shared, inside = private).
       **DECORATORS DONE (4 of 5 — concept fully understood incl. closures). `validate_args` = optional
       bonus, deferred. Moving on.**
-- [~] Iterators & generators → build a custom pagination generator. **IN PROGRESS** (started after
-      decorators). Task: a generator that yields a big list in pages of N items using `yield`.
-- [ ] Context managers → both `__enter__/__exit__` and `contextlib`
+- [x] Iterators & generators → built a `paginate(data, page_size)` generator that `yield`s a list in
+      pages of N items (`for i in range(0, len(data), page_size): yield data[i:i+page_size]`). Handles
+      even and uneven last page. **Started from "I don't know" on all 4 assessment Qs → learned yield
+      (pause/resume vs return which finishes) → built it.** Committed LOCALLY (push blocked by account
+      flag). PENDING: (1) push once GitHub clears, (2) retention check — explain yield in own words.
+- [x] Context managers → **BOTH ways DONE** (`context_manager.py`):
+      (1) Class way: `__enter__` (setup; return becomes `as x`) + `__exit__` (cleanup, runs even on error).
+      (2) contextlib way: `@contextmanager` on a generator — code before `yield` = setup, `yield` = where
+          the `with` body runs, code after `yield` = cleanup; wrap `yield` in `try/finally` so cleanup
+          runs even on crash. Proved both with a crash test (raise inside the block → cleanup still ran).
+      Learned: `with` is required (calling the manager alone does nothing); `finally` = "runs no matter
+      what"; reused the generator pause/resume idea for cleanup. Committed locally (push pending GitHub).
 - [ ] GIL → understand + explain in simple English
 - [ ] Multithreading vs multiprocessing → two scripts, same I/O problem, compare
 
@@ -146,8 +155,13 @@ Note: LangChain/LangGraph ARE on the plan — but as **Layer 6**, the LAST layer
 - **Current layer:** Layer 1 (Python fundamentals). **Pydantic sub-topic COMPLETE.** Next up: Decorators.
 - **Repo state:** ✅ LIVE ON GITHUB. Two commits pushed: `3a0a874` (patient model) and `feb900f`
   (load_record). Files on remote: `.gitignore`, `PROGRESS.md`, `layer-1-python/models.py`.
-- **Push blocker: RESOLVED.** The earlier `403 verify email` push block was cleared (Aniket resolved the
-  account issue and pushed successfully). Repo confirmed live by re-cloning.
+- **Push blocker RETURNED (recurring):** the `403 verify email` block came back mid-session after several
+  successful pushes. Regenerating the token did NOT fix it (block is account-level, not token-level).
+  Conclusion: GitHub keeps flagging/restricting the account — almost certainly because the leaked `ghp_`
+  classic token was still exposed. Action: revoke ALL old `ghp_` tokens + file a GitHub Support appeal to
+  unflag permanently. **Do not retry `git push` in a loop — it resolves on GitHub's clock.** Local commits
+  still count; everything syncs once the account is cleared. Latest LOCAL commit not yet pushed: the
+  pagination generator (branch is 1+ ahead of origin).
 - **Security lesson logged:** NEVER paste secrets (tokens, passwords, `.env`) in chat, code, or commits.
   The leaked `ghp_...` classic token must be revoked at https://github.com/settings/tokens (do this if
   not already done).
