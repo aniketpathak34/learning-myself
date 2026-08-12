@@ -165,13 +165,10 @@ Note: LangChain/LangGraph ARE on the plan — but as **Layer 6**, the LAST layer
   — FastAPI (build a Patient/Appointment CRUD API).**
 - **Repo state:** ✅ LIVE ON GITHUB. Two commits pushed: `3a0a874` (patient model) and `feb900f`
   (load_record). Files on remote: `.gitignore`, `PROGRESS.md`, `layer-1-python/models.py`.
-- **Push blocker RETURNED (recurring):** the `403 verify email` block came back mid-session after several
-  successful pushes. Regenerating the token did NOT fix it (block is account-level, not token-level).
-  Conclusion: GitHub keeps flagging/restricting the account — almost certainly because the leaked `ghp_`
-  classic token was still exposed. Action: revoke ALL old `ghp_` tokens + file a GitHub Support appeal to
-  unflag permanently. **Do not retry `git push` in a loop — it resolves on GitHub's clock.** Local commits
-  still count; everything syncs once the account is cleared. Latest LOCAL commit not yet pushed: the
-  pagination generator (branch is 1+ ahead of origin).
+- **Push blocker: RESOLVED (again).** The recurring `403 verify email` block cleared and ALL Layer 1 work
+  is now LIVE on GitHub (11 commits, 8 files in layer-1-python/, top commit `b94249e Layer 1 complete`).
+  Confirmed by re-cloning. If it ever returns: the trigger is the old leaked `ghp_` token — revoke it and
+  appeal at support.github.com. Keep committing locally regardless; pushes sync when the account is clear.
 - **Security lesson logged:** NEVER paste secrets (tokens, passwords, `.env`) in chat, code, or commits.
   The leaked `ghp_...` classic token must be revoked at https://github.com/settings/tokens (do this if
   not already done).
