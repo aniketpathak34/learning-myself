@@ -127,8 +127,15 @@ so I never scatter.
           runs even on crash. Proved both with a crash test (raise inside the block → cleanup still ran).
       Learned: `with` is required (calling the manager alone does nothing); `finally` = "runs no matter
       what"; reused the generator pause/resume idea for cleanup. Committed locally (push pending GitHub).
-- [ ] GIL → understand + explain in simple English
-- [ ] Multithreading vs multiprocessing → two scripts, same I/O problem, compare
+- [x] GIL → understood + explained in own words (Marathi) and passed. Knows: GIL lets only ONE thread
+      run Python code at a time → CPU-bound work can't go parallel with threads → use multiprocessing for
+      CPU work, threads only help I/O-bound (lock releases while waiting). Interview English version noted.
+- [x] Multithreading vs multiprocessing → built `threading_vs_mp.py`: same CPU-heavy `heavy()` run 3 ways
+      and timed with `perf_counter`. Results proved GIL live: sequential ~3.4s, threading ~3.2s (NO
+      speedup — GIL), multiprocessing ~1.95s (~half — real parallel, each process has own GIL).
+      Learned threading syntax (`Thread(target=)`, `.start()`, `.join()`), the `start,start,join,join`
+      order (join-right-after-start = accidental sequential), and `multiprocessing.Process` (same API).
+      **LAYER 1 (Month 1 Python internals) COMPLETE.**
 
 ### 5b. TRACK B — DSA (parallel, light dose) — STARTS AT LAYER 2, not before
 DSA is a slow-burn skill: little and often beats cramming. It runs ALONGSIDE the build track but never
@@ -151,8 +158,11 @@ Until the foundation ships: Kafka / RabbitMQ, microservices, sockets / real-time
 Note: LangChain/LangGraph ARE on the plan — but as **Layer 6**, the LAST layer, not now.
 
 ## 7. CURRENT STATE (updated each session)
-- **Date of last update:** 2026-07-21 (Session 2)
-- **Current layer:** Layer 1 (Python fundamentals). **Pydantic sub-topic COMPLETE.** Next up: Decorators.
+- **Date of last update:** 2026-08-07 (Session 3)
+- **Current layer:** **LAYER 1 (Month 1 Python internals) COMPLETE** — Pydantic, 4 Decorators, Generators,
+  Context Managers (both ways), GIL, Threading vs Multiprocessing all done, built + explained. Only tiny
+  optional leftover: Python's own `@dataclass` (Pydantic covered the validation deliverable). **Next: Layer 2
+  — FastAPI (build a Patient/Appointment CRUD API).**
 - **Repo state:** ✅ LIVE ON GITHUB. Two commits pushed: `3a0a874` (patient model) and `feb900f`
   (load_record). Files on remote: `.gitignore`, `PROGRESS.md`, `layer-1-python/models.py`.
 - **Push blocker RETURNED (recurring):** the `403 verify email` block came back mid-session after several
