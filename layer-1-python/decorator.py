@@ -3,6 +3,8 @@
 from functools import wraps
 
 def log_call(func):
+    # @wraps copies the original function's identity (__name__, __doc__) onto wrapper,
+    # so add.__name__ stays "add" instead of becoming "wrapper"
     @wraps(func)
     def wrapper(*args, **kwargs):
         print(f"Calling {func.__name__} with {args}")

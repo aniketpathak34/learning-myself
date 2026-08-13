@@ -158,11 +158,16 @@ Until the foundation ships: Kafka / RabbitMQ, microservices, sockets / real-time
 Note: LangChain/LangGraph ARE on the plan — but as **Layer 6**, the LAST layer, not now.
 
 ## 7. CURRENT STATE (updated each session)
-- **Date of last update:** 2026-08-07 (Session 3)
-- **Current layer:** **LAYER 1 (Month 1 Python internals) COMPLETE** — Pydantic, 4 Decorators, Generators,
-  Context Managers (both ways), GIL, Threading vs Multiprocessing all done, built + explained. Only tiny
-  optional leftover: Python's own `@dataclass` (Pydantic covered the validation deliverable). **Next: Layer 2
-  — FastAPI (build a Patient/Appointment CRUD API).**
+- **Date of last update:** 2026-08-13 (Session 4)
+- **Current layer:** **LAYER 2 — FastAPI, IN PROGRESS.** Layer 1 fully complete (see below).
+  Built `layer-2-fastapi/main.py`: a complete **Patient CRUD API** — POST create, GET list, GET by id,
+  PUT update, DELETE, all with proper `HTTPException` 404s. Uses a Pydantic `Patient` model as request
+  body (auto-validation). Data in an in-memory list (real DB = later). Tested all routes via curl/`/docs`.
+  Learned: `@app.get/post/put/delete` decorators, path parameters `{id}`, Pydantic body auto-validation,
+  `HTTPException` for correct status codes, REST path conventions (plural, same path per resource),
+  object dot-notation vs dict brackets, not-found check belongs AFTER the loop.
+  **NEW STYLE (his ask): describe/explain only, he writes the code, I validate. No code solutions.**
+  **Next in Layer 2:** dependency injection, then real DB (PostgreSQL + SQLAlchemy), then deploy.
 - **Repo state:** ✅ LIVE ON GITHUB. Two commits pushed: `3a0a874` (patient model) and `feb900f`
   (load_record). Files on remote: `.gitignore`, `PROGRESS.md`, `layer-1-python/models.py`.
 - **Push blocker: RESOLVED (again).** The recurring `403 verify email` block cleared and ALL Layer 1 work
