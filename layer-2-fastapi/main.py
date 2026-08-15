@@ -9,7 +9,14 @@ class Patient(BaseModel):
     name: str
     age: int
 
+class PatientCreate(BaseModel):
+    name: str
+    age: int
+
+
+
 patients = []
+counter = 0
 
 @app.get("/")
 def home():
@@ -22,7 +29,10 @@ def get_patients():
 
 
 @app.post("/patients")
-def create_patient(patient: Patient):
+def create_patient(patient: PatientCreate):
+    global counter
+    counter+=1
+    patient = Patient(id=counter, name=patient.name, age=patient.age)
     patients.append(patient)
     return patient
 

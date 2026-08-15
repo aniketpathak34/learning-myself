@@ -189,6 +189,23 @@ Note: LangChain/LangGraph ARE on the plan — but as **Layer 6**, the LAST layer
 
 ## 9. DAILY LOG (append-only — newest at top)
 
+### 2026-08-13 (Session 4) — Layer 2 FastAPI begins
+- **Built:** `layer-2-fastapi/main.py` — full Patient **CRUD API** (POST/GET-all/GET-by-id/PUT/DELETE)
+  with `HTTPException` 404s, path parameters, Pydantic body validation. Then refined: separate
+  `PatientCreate` (no id) input schema + **server-side id generation** using a `global counter`.
+  All routes tested via curl/`/docs`.
+- **New working style (Aniket's request):** I now give ONLY description/concept — he writes the code,
+  I validate & explain errors. No code solutions; hints only when asked. Working very well.
+- **Concepts learned:** REST path conventions (plural, one path per resource), `@app.<method>` decorators,
+  path params `{id}`, object dot-notation vs dict brackets, not-found check AFTER the loop, `HTTPException`
+  + status codes, `.remove()` from a list, `global` keyword for scope, input-vs-storage model separation.
+- **Errors he debugged himself (from explanation, not solution):** `'Patient' object does not support item
+  assignment` (dict brackets on an object), `else`-inside-loop wrong 404, `UnboundLocalError` on `counter`
+  (needed `global`), appending the wrong object / wrong order.
+- **Next:** real database (PostgreSQL + SQLAlchemy) to replace the in-memory list, then dependency
+  injection, then deploy. In-memory list loses data on restart — that's the motivation for the DB.
+
+
 ### 2026-07-21 (Session 2)
 - **Built & shipped:** Finished the Pydantic sub-topic. `models.py` now has: 6-digit `code` constraint
   via `Field(pattern=r"^\d{6}$")`, and a `load_record(data: dict) -> Patient` function that validates a
