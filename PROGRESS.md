@@ -158,8 +158,17 @@ Until the foundation ships: Kafka / RabbitMQ, microservices, sockets / real-time
 Note: LangChain/LangGraph ARE on the plan — but as **Layer 6**, the LAST layer, not now.
 
 ## 7. CURRENT STATE (updated each session)
-- **Date of last update:** 2026-08-13 (Session 4)
-- **Current layer:** **LAYER 2 — FastAPI, IN PROGRESS.** Layer 1 fully complete (see below).
+- **Date of last update:** 2026-08-24 (Session 5)
+- **Current layer:** **LAYER 2 — FastAPI + Database, IN PROGRESS.** Layer 1 fully complete (see below).
+  Session 5: connected a real **SQLAlchemy ORM + SQLite** database (`layer-2-fastapi/database.py`).
+  Full CRUD now persists to disk: `Patients` model, `Session` add/commit/query/get/delete, PUT via
+  fetch+modify+commit (unit of work), DB **auto-increment id** (removed the buggy in-memory counter that
+  collided after restart), new id returned via `session.refresh`. Debugged `UnmappedInstanceError`
+  (Pydantic vs SQLAlchemy object) and `IntegrityError` (counter-vs-DB id collision) himself from
+  explanations. Using SQLite for learning; will switch to PostgreSQL at deploy (1-line change).
+  **Cleanup TODO:** dead code in main.py (`patients=[]`, unused imports), PUT endpoint returns nothing,
+  PUT upserts on not-found instead of 404. **Next:** dependency injection (clean DB session handling),
+  then async, then deploy (Docker + PostgreSQL + cloud).
   Built `layer-2-fastapi/main.py`: a complete **Patient CRUD API** — POST create, GET list, GET by id,
   PUT update, DELETE, all with proper `HTTPException` 404s. Uses a Pydantic `Patient` model as request
   body (auto-validation). Data in an in-memory list (real DB = later). Tested all routes via curl/`/docs`.
