@@ -158,8 +158,16 @@ Until the foundation ships: Kafka / RabbitMQ, microservices, sockets / real-time
 Note: LangChain/LangGraph ARE on the plan — but as **Layer 6**, the LAST layer, not now.
 
 ## 7. CURRENT STATE (updated each session)
-- **Date of last update:** 2026-08-24 (Session 5)
-- **Current layer:** **LAYER 2 — FastAPI + Database, IN PROGRESS.** Layer 1 fully complete (see below).
+- **Date of last update:** 2026-08-25 (Session 6)
+- **Current layer:** **LAYER 2 — FastAPI + Database + DI, IN PROGRESS.** Layer 1 fully complete (below).
+  Session 6: added **Dependency Injection** — `get_db()` generator dependency (creates session, `yield`s
+  it, `finally: close`), injected into every endpoint via `db: Session = Depends(get_db)`. Refactored ALL
+  endpoints to use the injected session (removed repeated `with Session(engine)`); POST now raises a
+  proper 500 on error (fixed silent failure); cleaned up. Explained the DI flow correctly in own words
+  (yield gives session → endpoint queries → returns → finally closes; per-request session). Ties together
+  generators + context managers + DI. **Cleanup still pending:** `patients=[]` and `import traceback`
+  leftovers in main.py; PUT still upserts on not-found (his choice). **Next:** async/await, then the big
+  one — DEPLOY (Docker + PostgreSQL + Gunicorn/Nginx → live URL).
   Session 5: connected a real **SQLAlchemy ORM + SQLite** database (`layer-2-fastapi/database.py`).
   Full CRUD now persists to disk: `Patients` model, `Session` add/commit/query/get/delete, PUT via
   fetch+modify+commit (unit of work), DB **auto-increment id** (removed the buggy in-memory counter that
