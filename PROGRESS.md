@@ -214,6 +214,19 @@ Note: LangChain/LangGraph ARE on the plan — but as **Layer 6**, the LAST layer
 
 ## 9. DAILY LOG (append-only — newest at top)
 
+### 2026-09-02 (Session 7) — 🚀 DEPLOYED LIVE (Month 2 deliverable done)
+- **LIVE URL:** https://learning-myself-production.up.railway.app  (`/` → API running, `/docs` → Swagger).
+  Verified live by fetching both. Deployed on **Railway** from GitHub.
+- **How:** `requirements.txt` + `Procfile` (`web: uvicorn main:app --host 0.0.0.0 --port $PORT`) moved into
+  `layer-2-fastapi/`; env-based DB config (`os.getenv("DATABASE_URL", "sqlite:///patients.db")`); Railway
+  Root Directory = `layer-2-fastapi`; Generate Domain (target port 8080). Learned: host 0.0.0.0, $PORT,
+  root directory for a subdir app, env vars for config, "Unexposed service" → Generate Domain.
+- **⚠️ OPEN: PostgreSQL not confirmed.** Need to verify a Postgres DB is added on Railway AND a
+  `DATABASE_URL` variable references it (`${{Postgres.DATABASE_URL}}`). If not, the app is on SQLite on
+  Railway's ephemeral disk → data wiped on every redeploy. Fixing this = the real "SQLite→Postgres switch."
+- **This completes the Month 2 core deliverable: a live, deployed, database-backed FastAPI service.**
+
+
 ### 2026-08-13 (Session 4) — Layer 2 FastAPI begins
 - **Built:** `layer-2-fastapi/main.py` — full Patient **CRUD API** (POST/GET-all/GET-by-id/PUT/DELETE)
   with `HTTPException` 404s, path parameters, Pydantic body validation. Then refined: separate
