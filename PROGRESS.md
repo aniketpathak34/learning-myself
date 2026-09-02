@@ -158,7 +158,15 @@ Until the foundation ships: Kafka / RabbitMQ, microservices, sockets / real-time
 Note: LangChain/LangGraph ARE on the plan — but as **Layer 6**, the LAST layer, not now.
 
 ## 7. CURRENT STATE (updated each session)
-- **Date of last update:** 2026-08-25 (Session 6)
+- **Date of last update:** 2026-08-25 (Session 6/7)
+- **async/await:** learned + demonstrated in `layer-1-python/async_demo.py` — two `asyncio.sleep(2)` tasks
+  run concurrently via `asyncio.gather` finish in ~2s not 4s (I/O-bound concurrency, single thread).
+  Understood: `async def`/`await` = the syntax/pause-point, `asyncio` = the event loop that runs it and
+  switches at `await`; async is for I/O-bound (waiting), multiprocessing for CPU-bound. **Decision: keep
+  the FastAPI app's endpoints SYNC for now** — the DB is sync SQLAlchemy/SQLite, and async endpoints + a
+  blocking sync DB call would block the event loop (harmful). Proper async DB (async SQLAlchemy) is a
+  later/Month-3 topic. **Next: DEPLOY (Month 2 deliverable) — requirements.txt → env-based config →
+  PostgreSQL → Render, for a live URL.**
 - **Current layer:** **LAYER 2 — FastAPI + Database + DI, IN PROGRESS.** Layer 1 fully complete (below).
   Session 6: added **Dependency Injection** — `get_db()` generator dependency (creates session, `yield`s
   it, `finally: close`), injected into every endpoint via `db: Session = Depends(get_db)`. Refactored ALL

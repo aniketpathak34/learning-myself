@@ -3,8 +3,10 @@ from sqlalchemy import String, Integer
 from sqlalchemy import create_engine
 from sqlalchemy.orm import Session
 from fastapi import Depends
+import os
 
-engine = create_engine("sqlite:///patients.db", echo=True)
+url = os.getenv("DATABASE_URL", "sqlite:///patients.db")
+engine = create_engine(url, echo=True)
 
 class Base(DeclarativeBase):
     pass
