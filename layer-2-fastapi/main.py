@@ -59,7 +59,7 @@ def update_patient_by_id(patient_in: Patient, db: Session = Depends(get_db)):
     
     # जर नसेल तर नवीन तयार करा (तुमच्या लॉजिकनुसार)
     if not db_patient:
-        new_patient = Patients(id=patient_in.id, name=patient_in.name, age=patient_in.age)
+        new_patient = Patients(id=patient_in.id, name=patient_in.name, age=patient_in.age, email=patient_in.age)
         db.add(new_patient)
         db.commit()
         db.refresh(new_patient)
