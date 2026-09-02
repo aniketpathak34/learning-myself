@@ -12,10 +12,12 @@ class Patient(BaseModel):
     id: int
     name: str
     age: int
+    email: str
 
 class PatientCreate(BaseModel):
     name: str
     age: int
+    email: str
 
 patients = []
 
@@ -31,7 +33,7 @@ def get_patients(db: Session = Depends(get_db)):
 @app.post("/patients")
 def create_patient(patient_in: PatientCreate, db: Session = Depends(get_db)):
     try:
-        new_patient = Patients(name=patient_in.name, age=patient_in.age)
+        new_patient = Patients(name=patient_in.name, age=patient_in.age, email=patient_in.email)
         db.add(new_patient)
         db.commit()
         db.refresh(new_patient)

@@ -158,7 +158,13 @@ Until the foundation ships: Kafka / RabbitMQ, microservices, sockets / real-time
 Note: LangChain/LangGraph ARE on the plan — but as **Layer 6**, the LAST layer, not now.
 
 ## 7. CURRENT STATE (updated each session)
-- **Date of last update:** 2026-08-25 (Session 6/7)
+- **Date of last update:** 2026-09-02 (Session 7) — **LAYER 2 COMPLETE ✅ (deployed live + PostgreSQL)**
+- **LAYER 2 DONE:** live at https://learning-myself-production.up.railway.app on **PostgreSQL** (verified
+  `GET /patients` returns a Postgres-stored row). Connected via the PUBLIC db URL (`*.proxy.rlwy.net`) —
+  the internal `*.railway.internal` host failed ("could not translate host name"); public URL fixed it.
+- **NEXT PHASE (Phase 2 / Month 3):** candidates — Alembic (DB migrations, the natural next since
+  `create_all` can't ALTER existing tables), background tasks (FastAPI BackgroundTasks → Celery+Redis),
+  profiling. Track B (DSA) also now due. Minor cleanup pending (dead `patients=[]`, unused import; PUT upserts).
 - **async/await:** learned + demonstrated in `layer-1-python/async_demo.py` — two `asyncio.sleep(2)` tasks
   run concurrently via `asyncio.gather` finish in ~2s not 4s (I/O-bound concurrency, single thread).
   Understood: `async def`/`await` = the syntax/pause-point, `asyncio` = the event loop that runs it and
@@ -213,6 +219,20 @@ Note: LangChain/LangGraph ARE on the plan — but as **Layer 6**, the LAST layer
 6. Give me exactly ONE task.
 
 ## 9. DAILY LOG (append-only — newest at top)
+
+### 2026-09-02 (Session 8) — Alembic migrations
+- **Learned + did DB migrations with Alembic** on `layer-2-fastapi`. Installed alembic, `alembic init`,
+  configured `alembic/env.py` (target_metadata = Base.metadata; DATABASE_URL via `config.set_main_option`).
+- **Did a real migration:** added a nullable `email` column to `Patients`, `alembic revision --autogenerate
+  -m "add email"` generated `0fa1af89347b` (upgrade=add_column, downgrade=drop_column), `alembic upgrade
+  head` applied it. **Verified the existing row (RaviNew) survived with email=None** — the whole point:
+  change schema without losing data. Understood: migrations are versioned/tracked files (must be committed),
+  autogenerate diffs models vs DB, new columns on existing tables must be nullable.
+- Setup was fumbled first (manually made an empty alembic.ini/folder instead of running `alembic init`;
+  earlier `pip install` didn't take) — resolved by cleaning up and running the real init with `python3 -m`.
+- **Still LOCAL (SQLite) only.** NEXT: apply this migration to the **production Postgres** on Railway
+  (run `alembic upgrade head` against DATABASE_URL, or a release step) so prod schema matches.
+
 
 ### 2026-09-02 (Session 7) — 🚀 DEPLOYED LIVE (Month 2 deliverable done)
 - **LIVE URL:** https://learning-myself-production.up.railway.app  (`/` → API running, `/docs` → Swagger).

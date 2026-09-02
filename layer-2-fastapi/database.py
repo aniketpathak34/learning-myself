@@ -16,6 +16,7 @@ class Patients(Base):
     id: Mapped[int] = mapped_column(primary_key=True)
     name: Mapped[str] = mapped_column(String(30))
     age: Mapped[int] = mapped_column()
+    email: Mapped[str | None] = mapped_column(nullable=True)
 
 
 Base.metadata.create_all(engine)
